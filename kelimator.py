@@ -1,5 +1,4 @@
 # kelimator main kod dosyasi
-#git comment
 import pygame
 import random as rd
 from pygame import transform
@@ -9,17 +8,17 @@ from pygame.locals import *
 import pandas as pd
 import time as ti
 import tkinter as tk
+
 root = tk.Tk()
 
 
-# pygame.mixer.pre_init(44100, 16, 2, 4096)
+# initialize pygame and its mixer for sound
 pygame.mixer.init()
 pygame.init()
 
 
 # defining constants
-SCREEN_SIZE = WIDTH, HEIGHT = (
-    root.winfo_screenwidth(), root.winfo_screenheight())
+SCREEN_SIZE = WIDTH, HEIGHT = (root.winfo_screenwidth(), root.winfo_screenheight())
 FPS = 30
 NUMBER_OF_LETTERS = 8
 COUNTDOWN_TIME = 60
@@ -56,8 +55,7 @@ SURD_LIST2 = [
 CORRECT_GUESS = pygame.USEREVENT + 1
 UNCORRECT_GUESS = pygame.USEREVENT + 2
 USED_GUESS = pygame.USEREVENT + 3
-pygame.event.set_allowed(
-    [QUIT, KEYDOWN, CORRECT_GUESS, UNCORRECT_GUESS, USED_GUESS])
+pygame.event.set_allowed([QUIT, KEYDOWN, CORRECT_GUESS, UNCORRECT_GUESS, USED_GUESS])
 
 
 # file operations - from txt to pandas dataframe
@@ -70,10 +68,7 @@ for letter in letters:
 
 zeros = [0 for i in range(29)]
 
-t1 = ti.time()
 dic = {}
-
-
 for letter in letters:
     file_name = "./words/" + str(letter).upper() + ".txt"
     with open(file_name, "r") as t:
@@ -98,16 +93,10 @@ for letter in letters:
 
 
 df = pd.DataFrame.from_dict(dic, orient="index")
-
 df.columns = letters
-t5 = ti.time()
-print(t5 - t1)
-print(df.shape[0])
-
 
 # defining colors
 BLACK = (0, 0, 0)
-
 RED = (255, 0, 0)
 BLUE = (19, 147, 220)
 PURPLE = (149, 35, 206)
@@ -146,7 +135,6 @@ WRITING_TABLE = pygame.transform.scale(
     pygame.image.load("./images/yazi.png").convert(), (800, 70)
 )
 
-
 tutorialWidth = int(WIDTH * 0.5)
 tutorialHeight = int(0.625 * tutorialWidth)
 TUTORIAL_GENERAL = pygame.transform.scale(
@@ -155,7 +143,7 @@ TUTORIAL_GENERAL = pygame.transform.scale(
 )
 
 
-# initializing font
+# initializing fonts
 pygame.font.init()
 pygame.display.set_caption("Kelimatör")
 welcome_font = pygame.font.SysFont("georgia", 60)
@@ -163,12 +151,17 @@ message_font = pygame.font.SysFont("georgia", 30)
 title_font = pygame.font.SysFont("georgia", 80)
 letter_font = pygame.font.SysFont("georgia", 40)
 
-# initializing sound
+# initializing sounds
 goodGuess = pygame.mixer.Sound("./sounds/goodGuess.mp3")
 badGuess = pygame.mixer.Sound("./sounds/badGuess.mp3")
 background = pygame.mixer.Sound("./sounds/background.mp3")
 
-# helper functions will be defined from there
+
+# helper functions will be defined from here
+# descriptions of the functions will be given (if necessary) as comments at the top of each
+# --------------------
+
+
 def displayStartingScreen():
     WIN.blit(STARTING_BACKGROUND, (0, 0))
     welcome_message = welcome_font.render("Kelimatöre Hoşgeldiniz", 1, BLACK)
@@ -186,12 +179,10 @@ def drawMainGameWindow(
     WIN.blit(GAME_BACKGROUND, (0, 0))
     title = title_font.render("Kelimatör", 1, BLACK)
     WIN.blit(title, (40, 40))
-    WIN.blit(LETTERS_TABLE, (WIDTH * 7 / 10 -
-             LETTERS_TABLE.get_width() / 2, 20))
+    WIN.blit(LETTERS_TABLE, (WIDTH * 7 / 10 - LETTERS_TABLE.get_width() / 2, 20))
     WIN.blit(
         GUESS_TABLE,
-        (WIDTH * 7 / 10 - GUESS_TABLE.get_width() /
-         2, 40 + LETTERS_TABLE.get_height()),
+        (WIDTH * 7 / 10 - GUESS_TABLE.get_width() / 2, 40 + LETTERS_TABLE.get_height()),
     )
     WIN.blit(
         WRITING_TABLE,
@@ -238,8 +229,7 @@ def drawMainGameWindow(
         (WIDTH * 2 / 5 - countdown_title.get_width() / 2 - 60, HEIGHT * 7 / 10 - 115,),
     )
 
-    countdown = letter_font.render(
-        str(int(COUNTDOWN_TIME - time)), 1, SCORE_COLOR)
+    countdown = letter_font.render(str(int(COUNTDOWN_TIME - time)), 1, SCORE_COLOR)
     WIN.blit(
         countdown,
         (WIDTH * 2 / 5 - countdown.get_width() / 2 - 60, HEIGHT * 7 / 10 - 75,),
@@ -264,8 +254,7 @@ def drawMainGameWindow(
         ),
     )
 
-    num_of_words_left_value = letter_font.render(
-        str(noOfWords), 1, SCORE_COLOR)
+    num_of_words_left_value = letter_font.render(str(noOfWords), 1, SCORE_COLOR)
     WIN.blit(
         num_of_words_left_value,
         (
@@ -304,6 +293,7 @@ def drawMainGameWindow(
     pygame.display.update()
 
 
+# this is the screen we see after each round, it shows us the words we missed
 def drawMissedWordsDisplay(df):
     WIN.blit(MISSED_WORDS_BACKGROUND, (0, 0))
     idx = 0
@@ -330,8 +320,7 @@ def drawMissedWordsDisplay(df):
         ),
     )
 
-    start_game_message = message_font.render(
-        "Devam etmek için SPACE'e basın", 1, BLACK)
+    start_game_message = message_font.render("Devam etmek için SPACE'e basın", 1, BLACK)
 
     WIN.blit(
         start_game_message,
@@ -360,8 +349,7 @@ def drawAfterRoundDisplay(score):
         score_value, (WIDTH / 5 - score_value.get_width() / 2, HEIGHT / 2,),
     )
 
-    space_message = message_font.render(
-        "Yeniden oynamak için SPACE'e", 1, BLACK)
+    space_message = message_font.render("Yeniden oynamak için SPACE'e", 1, BLACK)
     WIN.blit(
         space_message,
         (
@@ -382,10 +370,10 @@ def drawAfterRoundDisplay(score):
     pygame.display.update()
 
 
+# the screen to show a short tutorial to teach this simple game
 def drawTutorialDisplay():
     WIN.blit(TUTORIAL_PAGE_BACKGROUND, (0, 0))
-    start_game_message = message_font.render(
-        "Başlamak için SPACE'e basın", 1, BLACK)
+    start_game_message = message_font.render("Başlamak için SPACE'e basın", 1, BLACK)
 
     WIN.blit(
         start_game_message,
@@ -400,16 +388,12 @@ def drawTutorialDisplay():
         (WIDTH / 12, HEIGHT * 2 / 5 - TUTORIAL_GENERAL.get_height() / 2,),
     )
 
-    letter_message = message_font.render(
-        "Haznendeki harfleri kullanarak", 1, BLACK)
+    letter_message = message_font.render("Haznendeki harfleri kullanarak", 1, BLACK)
     letter_message2 = message_font.render("kelimeler oluştur", 1, BLACK)
     guesses_message = message_font.render("ENTER'a bas ve doğru", 1, BLACK)
-    guesses_message2 = message_font.render(
-        "tahminlerini bu kısımdan gör", 1, BLACK)
-    writing_message = message_font.render(
-        "Kelimenin geçerli olup olmadığını", 1, BLACK)
-    writing_message2 = message_font.render(
-        "anlık olarak görebilirsin", 1, BLACK)
+    guesses_message2 = message_font.render("tahminlerini bu kısımdan gör", 1, BLACK)
+    writing_message = message_font.render("Kelimenin geçerli olup olmadığını", 1, BLACK)
+    writing_message2 = message_font.render("anlık olarak görebilirsin", 1, BLACK)
 
     messageWidth = int(WIDTH * 2 / 3 - 60)
     WIN.blit(letter_message, (messageWidth, HEIGHT / 6 - 30))
@@ -427,6 +411,7 @@ def drawTutorialDisplay():
     pygame.display.update()
 
 
+# returns a boolean as if the letter user entered is valid or not
 def isLetterProper(letter, letList, isUsed):
     if letter not in letList:
         return False
@@ -438,6 +423,7 @@ def isLetterProper(letter, letList, isUsed):
     return True
 
 
+# this function handles all the input user enters from the keyboard
 def userKeyboardInput(key, word, isUsed, letters, wordList, df):
     if key[K_e] and isLetterProper("e", letters, isUsed):
         word += "e"
@@ -512,6 +498,7 @@ def userKeyboardInput(key, word, isUsed, letters, wordList, df):
     return word, wordList, isUsed
 
 
+# after user entered the word and press enter this function will check if the word is valid or not
 def isWordValid(word, letList, df, wordList):
     letters = letList.copy()
     for letter in word:
@@ -533,6 +520,13 @@ def resetDictToFalse(dic):
     return dic
 
 
+"""
+isUsed dict serves us as a data structure that holds the information 
+that if the letters user has is used or not 
+(since user can use a letter only once)
+"""
+
+
 def isUsedDictCreation(letters):
     isUsed = {}
     for i in range(len(letters)):
@@ -541,6 +535,7 @@ def isUsedDictCreation(letters):
     return isUsed
 
 
+# for each correct word guess user gets a different score depending on the letters he/she used for the creation of word
 def calculateCorrectGuessScore(word):
     score = 0
     for letter in word:
@@ -556,6 +551,7 @@ def calculateCorrectGuessScore(word):
     return score
 
 
+# this function is so crucial for the game since it finds the all possible words (from thousands of them) that can be created with the letters that user has during the round
 def chooseWordsPerLetters(df, letsUserHave, letters):
     df2 = df.copy()
     dic = {}
@@ -570,6 +566,7 @@ def chooseWordsPerLetters(df, letsUserHave, letters):
     return df2
 
 
+# this function reacts to the user (if it is correct or not) in-time as he/she types the word
 def createGuessReaction(word, df, wordList):
     if word == "":
         reaction = ""
@@ -585,6 +582,7 @@ def createGuessReaction(word, df, wordList):
     return reaction
 
 
+# the function that selects 8 letters from 29
 def letterSelection():
     letterList = []
     idxList = []
@@ -625,14 +623,20 @@ def letterSelection():
     return letterList
 
 
+# definition of helper functions are over
+# --------------------
+
+
 # main function
 def main():
-    t2 = ti.time()
-    print(t2 - t1)
     clock = pygame.time.Clock()
+
+    # the boolean values for managing the while loops during the game
     firstScreen = True
     afterRoundDisplay = False
     tutorialScreen = True
+
+    # playing the background music
     background.play(-1)
 
     while firstScreen:
@@ -734,8 +738,7 @@ def main():
                 keysPressed, word, isUsed, letList, wordList, availableWordsDf
             )
 
-            guessReaction = createGuessReaction(
-                word, availableWordsDf, wordList)
+            guessReaction = createGuessReaction(word, availableWordsDf, wordList)
 
             if running_time >= COUNTDOWN_TIME:
                 run = False
