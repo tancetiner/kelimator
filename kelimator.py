@@ -1,4 +1,5 @@
 # kelimator main kod dosyasi
+#git comment
 import pygame
 import random as rd
 from pygame import transform
