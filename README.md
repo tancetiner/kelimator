@@ -11,3 +11,5 @@ I found out that there were many people wants to play the game like me. They wer
 
 So, I was already in a mood to do something in my area - in a summer without a internship :/ - and I had some experience with the Pygame module before (see "fizikciler") so I said: "Why not create the game by myself?". Obviously, it was going to be much simpler than the original one but I needed to start from somewhere. Then I started and built that...
 
+### Future Plans
+Obviously, the people I mentioned (passionate players of the game) are not github users. They won't download this project and run this python program on their local machines. As a result, this game will not be available for the target audience. As a future plan, I would like to develop this game in a mobile environment. As for now I'm lack of knowledge and experience in mobile programming for this purpose but I believe some day it can happen :)
