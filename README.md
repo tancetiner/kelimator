@@ -13,3 +13,21 @@ So, I was already in a mood to do something in my area - in a summer without a i
 
 ### Future Plans
 Obviously, the people I mentioned (passionate players of the game) are not github users. They won't download this project and run this python program on their local machines. As a result, this game will not be available for the target audience. As a future plan, I would like to develop this game in a mobile environment. As for now I'm lack of knowledge and experience in mobile programming for this purpose but I believe some day it can happen :)
+
+### Screenshots
+Welcome Screen:
+![WelcomeScreen](/screenshots/welcome.png)
+
+Tutorial Screen:
+![TutorialScreen](/screenshots/tutorial.png)
+
+Game Screen:
+![GameScreen](/screenshots/gameScreenWithWords.png)
+
+Words Screen (shows the words user could not guess):
+![WordsScreen](/screenshots/wordsScreen.png)
+
+Score Screen:
+![ScoreScreen](/screenshots/scoreScreen.png)
+
+
